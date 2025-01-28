@@ -176,7 +176,8 @@ export const type = () => {
   28 satisfies number;
 
   // never型
-  // 返り値にundefindすらも帰ってこない、処理が終わらない関数の引数に使う
+  // 返り値にundefindすらも帰ってこないような
+  // 処理が終わらない関数の戻り値に宣言する型
   function error(message: string): never {
     throw new Error(message);
     while (true) {}
