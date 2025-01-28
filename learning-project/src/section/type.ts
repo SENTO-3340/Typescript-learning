@@ -124,6 +124,7 @@ export const type = () => {
   }
   add(3, 2);
 
+  // void型
   // 関数の戻り値に何も返さない場合は型推論はvoidとなる
   // 返り値はundefinedとなるが、voidを使うこと！
   function sayHello(): void {
