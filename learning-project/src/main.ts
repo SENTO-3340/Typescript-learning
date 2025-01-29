@@ -1,3 +1,3 @@
-import { type } from './section/type';
+import { cls } from "./section/class";
 
-type();
+cls();
