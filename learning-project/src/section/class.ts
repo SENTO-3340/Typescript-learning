@@ -47,7 +47,9 @@ export const cls = () => {
   class Person2 {
     // 以下のように引数に装飾子 プロパティ名:型注釈　とすることによって
     // フィールド内と、constructor内を省略できる
-    constructor(public name: string, private age: number) {}
+    // readonly修飾子、初期化後は読み込むだけで、class内外書き換え不可
+    // protected装飾子、class外アクセス不可ただし継承先ではアクセス可能に！
+    constructor(public readonly name: string, protected age: number) {}
     incrementAge(this: Person2) {
       this.age += 1;
     }
@@ -55,7 +57,46 @@ export const cls = () => {
       console.log(`Hello! my name is ${this.name}.I am ${this.age} years old.`);
     }
   }
-  const Jhon = new Person2('Jhon', 25);
-  quill.incrementAge();
-  quill.greeting();
+  const jhon = new Person2('Jhon', 25);
+  jhon.incrementAge();
+  jhon.greeting();
+
+  //extends
+  //元々あるclassを継承したclassを作る
+  class Teacher extends Person2 {
+    // ゲッター・セッター
+    // get,オブジェクトを取得するときに実行する
+    // 値を返す必要あり（取得されるオブジェクト）
+    // 以下では取得時に、_subjectが空のオブジェクトだったら手動でエラーを出す
+    get subject(): string {
+      if (!this._subject) {
+        throw new Error('There is no subject.');
+      }
+      return this._subject;
+    }
+    // set,オブジェクトの値を上書きする時に実行する
+    // 以下では_subjectの値が更新されなかったら手動でエラーを出す
+    set subject(value) {
+      if (!value) {
+        throw new Error('There is no subject.');
+      }
+      this._subject = value;
+    }
+    // 継承したclass内でオブジェクトの拡張をするとき
+    // constructor関数に引数を複写（装飾子は不要）、続きで引数を追加する
+    constructor(name: string, age: number, private _subject: string) {
+      super(name, age); //再宣言したconstructor関数内にはsuper関数(引数)を入れる
+    }
+    // メソッドを更新したい時は、再宣言して上書き（this:型）を継承したclassに変更
+    greeting(this: Teacher) {
+      console.log(
+        `Hello! my name is ${this.name}.I am ${this.age} years old.I teach ${this.subject}`
+      );
+    }
+  }
+  const teacher = new Teacher('Quill', 38, 'Math');
+  teacher.incrementAge();
+  teacher.greeting();
+  teacher.subject;
+  teacher.subject = 'Music';
 };
