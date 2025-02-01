@@ -61,9 +61,27 @@ export const cls = () => {
   jhon.incrementAge();
   jhon.greeting();
 
+  // abstract(抽象クラス):継承に使用するためのクラス
+  // インスタンスを生成出来ない
+  abstract class Person3 {
+    constructor(public readonly name: string, protected age: number) {}
+    greeting(this: Person3) {
+      console.log(`Hello! my name is ${this.name}.I am ${this.age} years old.`);
+      // 抽象メソッドの配置
+      this.explainjob();
+    }
+    // abstractメソッド宣言：継承先用のメソッド、実行内容は書けない（継承先で書く）
+    // abstractメソッドは継承先で必ず実行する必要がある
+    abstract explainjob(): void;
+  }
+
   //extends
   //元々あるclassを継承したclassを作る
-  class Teacher extends Person2 {
+  class Teacher extends Person3 {
+    // abstractメソッドの実行
+    explainjob() {
+      console.log(`I am teacher and I teach ${this.subject}`);
+    }
     // ゲッター・セッター
     // get,オブジェクトを取得するときに実行する
     // 値を返す必要あり（取得されるオブジェクト）
@@ -95,7 +113,6 @@ export const cls = () => {
     }
   }
   const teacher = new Teacher('Quill', 38, 'Math');
-  teacher.incrementAge();
   teacher.greeting();
   teacher.subject;
   teacher.subject = 'Music';
