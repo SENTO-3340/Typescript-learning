@@ -99,4 +99,15 @@ export const cls = () => {
   teacher.greeting();
   teacher.subject;
   teacher.subject = 'Music';
+
+  // staticを使用してインスタンスを作らずにクラスを使用する方法
+  class STA {
+    static species = 'Homo sapiens';
+    static isAdult(age: number) {
+      if (age > 17) return true;
+      return false;
+    }
+  }
+  STA.species;
+  STA.isAdult;
 };
