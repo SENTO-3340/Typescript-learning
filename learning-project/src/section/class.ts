@@ -127,4 +127,27 @@ export const cls = () => {
   }
   STA.species;
   STA.isAdult;
+
+  // private constructorでシングルトンパターンを作る方法
+  // constuructorにprivate修飾子を付けて、外部からインスタンス生成不可に
+  // private static instanceプロパティ（class型）を作成し、getInstance関数
+  // 呼び出し時に、値が空の場合のみインスタンスを生成し値とする。
+  // これにより外部から一度しかインスタンスを生成出来ないシングルトンパターン完成。
+  class Teacher2 {
+    private static instance: Teacher2;
+    private constructor(public name: string, public age: number) {}
+    static getInstance() {
+      if (Teacher2.instance) {
+        return Teacher2.instance;
+      } else {
+        Teacher2.instance = new Teacher2('Seito', 34);
+        return Teacher2.instance;
+      }
+    }
+    greeting() {
+      console.log(`Hello! my name is ${this.name}.I am ${this.age} years old.`);
+    }
+  }
+  const teacher2 = Teacher2.getInstance();
+  teacher2.greeting();
 };
