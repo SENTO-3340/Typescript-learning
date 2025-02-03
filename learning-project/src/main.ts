@@ -1,5 +1,3 @@
-import { cls } from "./section/class";
-import { type } from "./section/type";
+import { application } from "./section/Application";
 
-type();
-cls();
+application();
